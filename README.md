@@ -1,58 +1,39 @@
-# MySQL_TraineeGround
+# SQL Trainer Ground
 
-## Dependencies
+Minimalistische lokale SQL-Trainings-App gegen eine MySQL-Instanz in Docker.
 
-(1) [Docker Desktop installieren](https://www.docker.com/products/docker-desktop/)
+## Voraussetzungen
+- Docker Desktop
+- Node.js (LTS empfohlen)
 
-![1768606340554](image/README/1768606340554.png)
-(2) sich in Docker registrieren / einloggen
+## Start (Windows)
+1) MySQL starten:
+   - `docker compose up -d`
+2) Environment setzen:
+   - `copy server\.env.example server\.env`
+3) Abhaengigkeiten installieren:
+   - `npm run install:all`
+4) Dev-Server starten:
+   - `npm run dev`
+5) Browser oeffnen:
+   - http://localhost:5173
 
-## Starten (CMD)
+Optional: `start-dev.bat` startet Docker und die Dev-Server.
 
-(1) Docker Desktop starten
-(2) In ordnerroot doppelklick auf start.bat
-![1768606359811](image/README/1768606359811.png)
-(3) Danach hast du:
-    - MySQL auf localhost:3306
-    - Adminer im Browser auf http://localhost:8080
-    - phpMyAdmin optional auf http://localhost:8081
+## Verbindung testen
+Im DQL-Panel:
+- `SELECT 1;`
 
-## “Reiner Editor” im Browser (mit Tabellen-Ansicht + Output)
+## Projektstruktur
+- `server` Express + mysql2 API
+- `client` Vite + React + Monaco Editor
 
-Adminer Login
+## API
+- POST `http://localhost:3001/api/execute`
+  - Body: `{ "panel": "DDL|DQL|DML|DCL", "sql": "...", "database": "bank" }`
+- GET `http://localhost:3001/api/schema?database=bank`
 
-Öffne http://localhost:8080 und nutze:
-
-System: MySQL
-
-Server: mysql (wichtig: im Docker-Netz heißt der Service so)
-
-Benutzer: root
-
-Passwort: root
-
-Datenbank: bank
-
-Dann hast du links Tabellen, oben SQL-Eingabe, unten Ergebnis/Tabellen.
-
-Falls du Adminer vom Host verbinden willst (manchmal bietet Adminer Server-Feld): mysql ist korrekt innerhalb des Docker-Netzes. In vielen Fällen klappt auch localhost, aber zuverlässig ist mysql.
-
-## MySQL Workbench anbinden (GUI-Client)
-
-In MySQL Workbench:
-
-+ (New Connection)
-
-Connection Name: mysql8_lab
-
-Hostname: 127.0.0.1
-
-Port: 3306
-
-Username: root
-
-Password: root (Store in Vault)
-
-Test Connection → OK.
-
-Hinweis: 127.0.0.1 ist hier besser als localhost (manchmal DNS/Socket-Themen).
+## Hinweise
+- Passwoerter liegen nur in `server/.env` (nicht im Frontend).
+- Nach DDL-Statements wird das Schema automatisch aktualisiert.
+- DQL ist standardmaessig read-only (nur SELECT/SHOW/DESCRIBE/EXPLAIN).
