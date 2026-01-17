@@ -171,6 +171,11 @@ export default function App() {
       <div className="main">
         <aside className="sidebar">
           <SchemaTree databases={schemaDatabases} currentDatabase={selectedDatabase} />
+          <div className="sidebar-footer">
+            <a href="https://datenflix007.github.io/" target="_blank" rel="noreferrer">
+              (c) 2025 Felix Staacke
+            </a>
+          </div>
         </aside>
         <section className="split-view">
           <SqlPanel

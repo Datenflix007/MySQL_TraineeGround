@@ -100,7 +100,7 @@ export default function SqlPanel({
         <Editor
           height="100%"
           language="sql"
-          theme="vs"
+          theme="vs-dark"
           value={sql}
           onChange={(value) => onSqlChange(value || '')}
           onMount={handleMount}
